@@ -9,7 +9,18 @@ import { portfolio as p } from "@/data/portfolio";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
-const TEXT = "Have a project in mind?";
+const HEADING = "Have a project in mind?";
+
+const words = (cls: string) =>
+  HEADING.split(" ").map((w, wi) => (
+    <span key={wi} className="mr-[0.25em] inline-block whitespace-nowrap">
+      {w.split("").map((c, ci) => (
+        <span key={ci} className={`${cls} inline-block`}>
+          {c}
+        </span>
+      ))}
+    </span>
+  ));
 
 export default function Contact() {
   const root = useRef<HTMLElement>(null);
@@ -18,23 +29,30 @@ export default function Contact() {
     () => {
       const mm = gsap.matchMedia();
       mm.add("(prefers-reduced-motion: no-preference)", () => {
-        gsap.from(".c-char", {
-          opacity: 0,
-          y: 60,
-          filter: "blur(16px)",
-          duration: 1,
-          ease: "power3.out",
-          stagger: 0.03,
+        const tl = gsap.timeline({
+          defaults: { ease: "power3.out" },
           scrollTrigger: { trigger: ".c-title", start: "top 80%", once: true },
         });
-        gsap.from(".c-rest", {
-          opacity: 0,
-          y: 30,
-          duration: 0.9,
-          ease: "power3.out",
-          stagger: 0.12,
-          scrollTrigger: { trigger: ".c-title", start: "top 70%", once: true },
-        });
+
+        tl.from(".c-pill", { y: 20, opacity: 0, duration: 0.6 })
+          // main heading letters rise and un-blur
+          .from(
+            ".c-main",
+            { y: 40, opacity: 0, filter: "blur(14px)", duration: 1, stagger: 0.03 },
+            "-=0.2"
+          )
+          // faded echo copy starts lower, trails behind, then merges and disappears
+          .from(
+            ".c-ghost",
+            { y: 70, opacity: 0, filter: "blur(18px)", duration: 1.1, stagger: 0.03 },
+            "<0.15"
+          )
+          .to(".c-ghost-wrap", { opacity: 0, duration: 0.7 }, ">-0.1")
+          .from(
+            ".c-after",
+            { y: 24, opacity: 0, duration: 0.8, stagger: 0.1 },
+            "-=1.2"
+          );
       });
     },
     { scope: root }
@@ -44,37 +62,43 @@ export default function Contact() {
     <section
       ref={root}
       id="contact"
-      className="mx-auto flex min-h-screen max-w-6xl flex-col items-center justify-center px-6 py-32 text-center"
+      className="mx-auto flex min-h-[90vh] max-w-6xl flex-col items-center justify-center px-6 py-32 text-center"
     >
-      <p className="c-rest inline-flex items-center gap-2 rounded-full border border-line bg-card px-4 py-1.5 text-sm text-mute">
+      <p className="c-pill inline-flex items-center gap-2 rounded-full border border-line bg-card px-4 py-1.5 text-sm text-mute">
         <span className="h-2 w-2 animate-pulse rounded-full bg-teal" />
-        Available for new projects
+        Available for new opportunities
       </p>
 
-      <h2 className="c-title mt-8 text-6xl font-bold uppercase leading-[0.95] md:text-9xl">
-        {TEXT.split(" ").map((w, wi) => (
-          <span key={wi} className="mr-[0.25em] inline-block whitespace-nowrap">
-            {w.split("").map((c, ci) => (
-              <span key={ci} className="c-char inline-block">
-                {c}
-              </span>
-            ))}
-          </span>
-        ))}
+      <h2 className="c-title relative mt-8 text-[clamp(2rem,6.2vw,5.5rem)] font-bold uppercase leading-[1.05] tracking-tight md:whitespace-nowrap">
+        <span className="relative block">{words("c-main")}</span>
+        <span
+          aria-hidden="true"
+          className="c-ghost-wrap pointer-events-none absolute inset-0 block text-teal opacity-35"
+        >
+          {words("c-ghost")}
+        </span>
       </h2>
 
-      <div className="c-rest mt-12">
+      <p className="c-after mt-6 max-w-xl text-lg text-mute">
+        Together, we can create something useful, thoughtful and built to last. Let&apos;s
+        collaborate and turn your idea into a working product.
+      </p>
+
+      <div className="mt-10">
         <Magnetic>
           <a
             href={`mailto:${p.email}`}
-            className="inline-block rounded-full bg-teal px-10 py-5 text-lg font-semibold text-bg"
+            className="c-after inline-flex items-center gap-2 rounded-full bg-ink px-8 py-4 font-semibold text-bg transition-colors hover:bg-teal"
           >
-            {p.email}
+            Contact Me
+            <span aria-hidden="true">↗</span>
           </a>
         </Magnetic>
       </div>
 
-      <div className="c-rest mt-12 flex gap-8 text-mute">
+      <p className="c-after mt-6 text-sm text-mute">{p.email}</p>
+
+      <div className="c-after mt-12 flex gap-8 text-mute">
         {p.socials.map((s) => (
           <a key={s.label} href={s.href} className="hover:text-ink">
             {s.label}
@@ -82,7 +106,7 @@ export default function Contact() {
         ))}
       </div>
 
-      <p className="c-rest mt-24 text-sm text-mute">© 2026 {p.name}</p>
+      <p className="c-after mt-24 text-sm text-mute">© 2026 {p.name}</p>
     </section>
   );
 }

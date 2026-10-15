@@ -30,8 +30,9 @@ export default function Hero() {
     () => {
       const mm = gsap.matchMedia();
       mm.add("(prefers-reduced-motion: no-preference)", () => {
-        // delay 2.1s so the intro plays right as the preloader curtain lifts
-        const tl = gsap.timeline({ delay: 2.1, defaults: { ease: "power4.out" } });
+        // wait for the preloader curtain on the first visit, start almost at once after that
+        const seen = sessionStorage.getItem("pl") === "1";
+        const tl = gsap.timeline({ delay: seen ? 0.2 : 2.1, defaults: { ease: "power4.out" } });
         tl.from(".char", { yPercent: 115, duration: 1.1, stagger: 0.045 })
           .from(".portrait", { y: 140, opacity: 0, duration: 1.2 }, "-=0.8")
           .from(".hero-meta > *", { y: 24, opacity: 0, duration: 0.8, stagger: 0.1 }, "-=0.7");
@@ -61,15 +62,15 @@ export default function Hero() {
         <span className="w2 inline-block">{chars(others.join(" "))}</span>
       </h1>
 
-      <div className="portrait relative z-10 -mt-[3vw] aspect-[3/4] w-[min(72vw,360px)]">
+      <div className="portrait relative z-10 -mt-[3vw] aspect-[2/3] w-[min(62vw,320px)]">
         {p.photo ? (
           <Image
             src={p.photo}
             alt={p.name}
             fill
             priority
-            sizes="360px"
-            className="object-contain object-bottom"
+            sizes="320px"
+            className="rounded-3xl object-cover object-top"
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center rounded-3xl bg-gradient-to-br from-teal to-violet text-8xl font-bold text-bg">
