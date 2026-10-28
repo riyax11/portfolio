@@ -3,6 +3,8 @@ import Marquee from "@/components/Marquee";
 import Reveal from "@/components/Reveal";
 import Services from "@/components/Services";
 import Projects from "@/components/Projects";
+import Stack from "@/components/Stack";
+import GithubRepos from "@/components/GithubRepos";
 import Experience from "@/components/Experience";
 import Certifications from "@/components/Certifications";
 import Contact from "@/components/Contact";
@@ -22,6 +24,9 @@ export default function Home() {
             </li>
             <li>
               <a href="#projects" className="hover:text-ink">Work</a>
+            </li>
+            <li>
+              <a href="#github" className="hover:text-ink">GitHub</a>
             </li>
             <li>
               <a href="#experience" className="hover:text-ink">Experience</a>
@@ -52,6 +57,8 @@ export default function Home() {
 
       <Services />
       <Projects />
+      <Stack />
+      <GithubRepos />
       <Experience />
       <Certifications />
       <Contact />
