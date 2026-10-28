@@ -1,4 +1,5 @@
 export type Project = {
+  slug: string;
   title: string;
   label: string;
   tagline: string;
@@ -13,6 +14,7 @@ export type Project = {
 
 const projects: Project[] = [
   {
+    slug: "verijob-ai",
     title: "VeriJob AI",
     label: "NLP · Machine Learning",
     tagline: "Fake job posting detector",
@@ -29,6 +31,7 @@ const projects: Project[] = [
     isPrivate: false,
   },
   {
+    slug: "finsight-ai",
     title: "FinSight AI",
     label: "LLM · Data Analytics",
     tagline: "Ask a bank's data questions in plain English",
@@ -37,7 +40,7 @@ const projects: Project[] = [
       "Every generated query passes a safety check and is shown next to the answer.",
       "Results appear as interactive charts with an AI-written summary.",
     ],
-    tech: ["Django", "PostgreSQL", "Groq LLM", "Chart.js", "Python"],
+    tech: ["Django", "PostgreSQL", "Groq LLM", "Chart.js", "Python", "SQL"],
     image: "/projects/finsight-ai.png",
     code: "https://github.com/riyax11/finsight-ai",
     live: "",
@@ -45,6 +48,7 @@ const projects: Project[] = [
     isPrivate: false,
   },
   {
+    slug: "chainguard",
     title: "ChainGuard",
     label: "Blockchain · Team of 3",
     tagline: "Anti-money laundering monitor",
@@ -61,6 +65,7 @@ const projects: Project[] = [
     isPrivate: false,
   },
   {
+    slug: "dataforge-ai",
     title: "DataForge AI",
     label: "Data Engineering · AI-assisted base",
     tagline: "Approval-gated data pipeline workspace",
@@ -69,7 +74,7 @@ const projects: Project[] = [
       "Extended with an LLM planner (Groq) that proposes the steps, while fixed rules enforce the approvals.",
       "Falls back to a rule-based plan if the model fails, and sends only column metadata, never row data.",
     ],
-    tech: ["React", "Express", "PostgreSQL", "Drizzle", "OpenAPI", "Groq"],
+    tech: ["React", "Express", "PostgreSQL", "Drizzle", "OpenAPI", "Groq LLM"],
     image: "/projects/dataforge-ai.png",
     code: "https://github.com/riyax11/dataforge-ai",
     live: "",
@@ -77,6 +82,7 @@ const projects: Project[] = [
     isPrivate: false,
   },
   {
+    slug: "inventoryqr",
     title: "InventoryQR",
     label: "Full-Stack",
     tagline: "Warehouse inventory with QR and barcode scanning",
@@ -90,9 +96,10 @@ const projects: Project[] = [
     code: "",
     live: "",
     demo: "",
-    isPrivate: true,
+    isPrivate: false,
   },
   {
+    slug: "chair-occupancy",
     title: "Chair Occupancy Detection",
     label: "Computer Vision · Internship project",
     tagline: "Measures how long each chair is occupied",
@@ -106,7 +113,7 @@ const projects: Project[] = [
     code: "",
     live: "",
     demo: "",
-    isPrivate: true,
+    isPrivate: false,
   },
 ];
 
@@ -141,19 +148,16 @@ export const portfolio = {
     { title: "Data & Analytics", note: "Python, SQL, dashboards" },
     { title: "Full-Stack Development", note: "React, FastAPI, Django, Node.js" },
   ],
+  // these names must match the strings in each project's tech list so hovering can link them
   stack: [
-    { group: "Languages", items: ["Python", "JavaScript", "TypeScript", "SQL", "Solidity"] },
-    {
-      group: "AI & ML",
-      items: ["scikit-learn", "NLP (TF-IDF)", "YOLOv8 · OpenCV", "LLM apps (Groq)", "Prompt design"],
-    },
-    { group: "Backend", items: ["FastAPI", "Django", "Node.js · Express", "REST APIs"] },
-    { group: "Frontend", items: ["React", "Next.js", "Tailwind CSS", "Chart.js", "GSAP"] },
-    {
-      group: "Data & Tools",
-      items: ["PostgreSQL", "SQLite", "SQLAlchemy", "Drizzle ORM", "Git · GitHub"],
-    },
+    { group: "Languages", items: ["Python", "SQL", "Solidity"] },
+    { group: "AI & ML", items: ["scikit-learn", "NLTK", "YOLOv8", "OpenCV", "Groq LLM"] },
+    { group: "Backend", items: ["FastAPI", "Django", "Node.js", "Express", "ethers.js", "Hardhat"] },
+    { group: "Frontend", items: ["React", "Chart.js", "Next.js", "Tailwind CSS", "GSAP", "TypeScript"] },
+    { group: "Data & Tools", items: ["PostgreSQL", "SQLite", "SQLAlchemy", "Drizzle", "OpenAPI"] },
   ],
+  // technologies used to build this portfolio site
+  siteTech: ["Next.js", "Tailwind CSS", "GSAP", "TypeScript"],
   projects,
   experience: [
     {

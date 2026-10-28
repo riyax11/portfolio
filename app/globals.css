@@ -8,6 +8,8 @@
   --color-mute: #8fa9aa;
   --color-teal: #1fb5a8;
   --color-violet: #7c4dff;
+  --color-danger: #ff4d6d;
+  --color-amber: #f5a524;
   --font-sans: var(--font-sora), system-ui, sans-serif;
 }
 
@@ -26,8 +28,112 @@
   animation: marquee 45s linear infinite;
 }
 
+/* ---------- animated project scenes (drawn in code, no screenshots) ---------- */
+.scene {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 1rem;
+  border: 1px solid var(--color-line);
+  background: color-mix(in srgb, var(--color-bg) 72%, transparent);
+  padding: 1rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+/* VeriJob */
+@keyframes sc-flag {
+  0%, 18% { background-size: 0% 100%; }
+  34%, 90% { background-size: 100% 100%; }
+  100% { background-size: 0% 100%; }
+}
+.sc-flag {
+  color: var(--color-danger);
+  background-image: linear-gradient(
+    color-mix(in srgb, var(--color-danger) 26%, transparent),
+    color-mix(in srgb, var(--color-danger) 26%, transparent)
+  );
+  background-repeat: no-repeat;
+  background-size: 0% 100%;
+  animation: sc-flag 6s ease-in-out infinite;
+}
+.sc-flag.d2 { animation-delay: 0.7s; }
+@keyframes sc-gauge {
+  0%, 25% { stroke-dashoffset: 157; }
+  55%, 90% { stroke-dashoffset: 22; }
+  100% { stroke-dashoffset: 157; }
+}
+.sc-gauge { stroke-dasharray: 157; stroke-dashoffset: 157; animation: sc-gauge 6s ease-in-out infinite; }
+@keyframes sc-badge {
+  0%, 50% { opacity: 0; transform: scale(0.85); }
+  60%, 90% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; }
+}
+.sc-badge { animation: sc-badge 6s ease-out infinite; }
+
+/* FinSight */
+.sc-type { display: inline-block; overflow: hidden; white-space: nowrap; vertical-align: bottom; max-width: 0; }
+@keyframes sc-t1 { 0% { max-width: 0; } 18%, 100% { max-width: 40ch; } }
+@keyframes sc-t2 { 0%, 20% { max-width: 0; } 42%, 100% { max-width: 40ch; } }
+.sc-t1 { animation: sc-t1 8s steps(32, end) infinite; }
+.sc-t2 { animation: sc-t2 8s steps(32, end) infinite; }
+@keyframes sc-bar {
+  0%, 48% { transform: scaleY(0); }
+  66%, 92% { transform: scaleY(1); }
+  100% { transform: scaleY(0); }
+}
+.sc-bar { transform-origin: bottom; transform: scaleY(0); animation: sc-bar 8s ease-out infinite; }
+
+/* ChainGuard */
+@keyframes sc-risk {
+  0%, 25% { stroke: var(--color-teal); }
+  40%, 58% { stroke: var(--color-amber); }
+  72%, 92% { stroke: var(--color-danger); }
+  100% { stroke: var(--color-teal); }
+}
+.sc-risk { stroke: var(--color-teal); animation: sc-risk 3.6s ease-in-out infinite; }
+@keyframes sc-blink { 50% { opacity: 0.25; } }
+.sc-blink { animation: sc-blink 1.2s steps(1) infinite; }
+
+/* DataForge */
+@keyframes sc-node {
+  0%, 6% { border-color: var(--color-line); color: var(--color-mute); }
+  14%, 70% { border-color: var(--color-teal); color: var(--color-ink); }
+  86%, 100% { border-color: var(--color-line); color: var(--color-mute); }
+}
+.sc-node { border-color: var(--color-line); color: var(--color-mute); animation: sc-node 6s ease-in-out infinite; }
+@keyframes sc-wait { 0%, 50% { opacity: 1; } 56%, 94% { opacity: 0; } 100% { opacity: 1; } }
+@keyframes sc-ok { 0%, 52% { opacity: 0; } 60%, 92% { opacity: 1; } 100% { opacity: 0; } }
+.sc-wait { animation: sc-wait 6s infinite; }
+.sc-ok { animation: sc-ok 6s infinite; }
+
+/* InventoryQR */
+@keyframes sc-scan { 0%, 100% { top: 0; } 50% { top: calc(100% - 2px); } }
+.sc-scan {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--color-teal);
+  box-shadow: 0 0 12px 2px var(--color-teal);
+  animation: sc-scan 3s ease-in-out infinite;
+}
+
+/* Chair occupancy */
+@keyframes sc-pulse { 50% { box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-danger) 30%, transparent); } }
+.sc-pulse { animation: sc-pulse 1.6s ease-in-out infinite; }
+
 @media (prefers-reduced-motion: reduce) {
-  .animate-marquee {
+  .animate-marquee,
+  .sc-flag, .sc-gauge, .sc-badge, .sc-t1, .sc-t2, .sc-bar, .sc-risk, .sc-blink,
+  .sc-node, .sc-wait, .sc-ok, .sc-scan, .sc-pulse {
     animation: none;
   }
+  .sc-flag { background-size: 100% 100%; }
+  .sc-gauge { stroke-dashoffset: 22; }
+  .sc-type { max-width: 40ch; }
+  .sc-bar { transform: scaleY(1); }
+  .sc-ok { opacity: 1; }
 }
