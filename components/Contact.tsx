@@ -35,13 +35,11 @@ export default function Contact() {
         });
 
         tl.from(".c-pill", { y: 20, opacity: 0, duration: 0.6 })
-          // main heading letters rise and un-blur
           .from(
             ".c-main",
             { y: 40, opacity: 0, filter: "blur(14px)", duration: 1, stagger: 0.03 },
             "-=0.2"
           )
-          // faded echo copy starts lower, trails behind, then merges and disappears
           .from(
             ".c-ghost",
             { y: 70, opacity: 0, filter: "blur(18px)", duration: 1.1, stagger: 0.03 },
@@ -66,7 +64,7 @@ export default function Contact() {
     >
       <p className="c-pill inline-flex items-center gap-2 rounded-full border border-line bg-card px-4 py-1.5 text-sm text-mute">
         <span className="h-2 w-2 animate-pulse rounded-full bg-teal" />
-        Available for new opportunities
+        Available for internships and new opportunities
       </p>
 
       <h2 className="c-title relative mt-8 text-[clamp(2rem,6.2vw,5.5rem)] font-bold uppercase leading-[1.05] tracking-tight md:whitespace-nowrap">
@@ -84,7 +82,7 @@ export default function Contact() {
         collaborate and turn your idea into a working product.
       </p>
 
-      <div className="mt-10">
+      <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
         <Magnetic>
           <a
             href={`mailto:${p.email}`}
@@ -94,6 +92,14 @@ export default function Contact() {
             <span aria-hidden="true">↗</span>
           </a>
         </Magnetic>
+        <a
+          href="/resume.pdf"
+          download="Riya_Patkar_Resume.pdf"
+          className="c-after inline-flex items-center gap-2 rounded-full border border-teal px-8 py-4 font-semibold text-teal transition-colors hover:bg-teal hover:text-bg"
+        >
+          Download resume
+          <span aria-hidden="true">↓</span>
+        </a>
       </div>
 
       <p className="c-after mt-6 text-sm text-mute">{p.email}</p>
