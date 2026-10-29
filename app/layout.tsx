@@ -4,13 +4,23 @@ import SmoothScroll from "@/components/SmoothScroll";
 import ScrollProgress from "@/components/ScrollProgress";
 import CustomCursor from "@/components/CustomCursor";
 import Preloader from "@/components/Preloader";
+import { portfolio as p } from "@/data/portfolio";
 import "./globals.css";
 
 const sora = Sora({ subsets: ["latin"], variable: "--font-sora" });
 
+const title = `${p.name} | ${p.role}`;
+
 export const metadata: Metadata = {
-  title: "Your Name | Full-stack Developer",
-  description: "Portfolio of Your Name, a full-stack developer.",
+  metadataBase: new URL("https://portfolio-riya-patkar.vercel.app"),
+  title,
+  description: p.intro,
+  openGraph: {
+    title,
+    description: p.intro,
+    url: "https://portfolio-riya-patkar.vercel.app",
+    type: "website",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

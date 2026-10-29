@@ -15,6 +15,9 @@ type Repo = {
   fork: boolean;
 };
 
+// repos that should not appear in this list
+const HIDDEN = [p.github.toLowerCase(), "portfolio"];
+
 export default function GithubRepos() {
   const [repos, setRepos] = useState<Repo[] | null>(null);
   const [failed, setFailed] = useState(false);
@@ -31,9 +34,9 @@ export default function GithubRepos() {
       .then((data) =>
         setRepos(
           data
-            .filter((r) => !r.fork && r.name.toLowerCase() !== p.github.toLowerCase())
+            .filter((r) => !r.fork && !HIDDEN.includes(r.name.toLowerCase()))
             .sort((a, b) => +new Date(b.pushed_at) - +new Date(a.pushed_at))
-            .slice(0, 6)
+            .slice(0, 9)
         )
       )
       .catch((err: Error) => {

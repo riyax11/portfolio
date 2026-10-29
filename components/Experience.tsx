@@ -46,7 +46,7 @@ export default function Experience() {
   const hue = (i: number) => `linear-gradient(135deg, hsl(${170 + i * 40} 60% 35%), hsl(${260 + i * 20} 70% 45%))`;
 
   return (
-    <section ref={root} id="experience" className="bg-ink px-6 py-32 text-bg">
+    <section ref={root} id="experience" className="bg-ink px-6 py-24 text-bg md:py-32">
       <div className="mx-auto max-w-6xl">
         <p className="opacity-60">Experience</p>
         <ul ref={list} className="mt-8 border-t border-bg/20" onMouseLeave={() => setActive(null)}>
@@ -54,12 +54,12 @@ export default function Experience() {
             <li
               key={e.org}
               onMouseEnter={() => setActive(i)}
-              className={`flex items-center justify-between gap-6 border-b border-bg/20 py-8 transition-opacity duration-300 ${
+              className={`flex flex-col gap-2 border-b border-bg/20 py-6 transition-opacity duration-300 md:flex-row md:items-center md:justify-between md:gap-6 md:py-8 ${
                 active !== null && active !== i ? "opacity-30" : "opacity-100"
               }`}
             >
               <div>
-                <p className="text-3xl font-bold md:text-5xl">{e.org}</p>
+                <p className="text-2xl font-bold md:text-5xl">{e.org}</p>
                 <p className="mt-1 opacity-70">{e.role}</p>
               </div>
               <p className="shrink-0 text-sm opacity-70">{e.when}</p>
@@ -70,7 +70,7 @@ export default function Experience() {
 
       <div
         ref={card}
-        className="pointer-events-none fixed left-0 top-0 z-50 flex h-36 w-56 items-end rounded-2xl p-4 text-lg font-bold text-white"
+        className="pointer-events-none fixed left-0 top-0 z-50 hidden h-36 w-56 items-end rounded-2xl p-4 text-lg font-bold text-white md:flex"
         style={{ background: hue(active ?? 0) }}
       >
         {active !== null ? p.experience[active].org : ""}

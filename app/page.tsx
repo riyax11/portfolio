@@ -14,11 +14,11 @@ export default function Home() {
   return (
     <main>
       <header className="fixed inset-x-0 top-0 z-50 border-b border-line bg-bg/70 backdrop-blur">
-        <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
-          <a href="#home" className="font-bold">
+        <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
+          <a href="#home" className="hidden font-bold sm:block">
             {p.name}
           </a>
-          <ul className="flex gap-6 text-sm text-mute">
+          <ul className="flex w-full justify-between gap-2 text-xs text-mute sm:w-auto sm:justify-end sm:gap-6 sm:text-sm">
             <li>
               <a href="#about" className="hover:text-ink">About</a>
             </li>
