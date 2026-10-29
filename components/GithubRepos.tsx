@@ -15,8 +15,15 @@ type Repo = {
   fork: boolean;
 };
 
-// repos that should not appear in this list
-const HIDDEN = [p.github.toLowerCase(), "portfolio"];
+// only these repos are shown, in this order (names are not case sensitive)
+const FEATURED = [
+  "verijob-ai",
+  "finsight-ai",
+  "chainguard-aml",
+  "dataforge-ai",
+  "InventoryQR",
+  "chair-occupancy-detection",
+];
 
 export default function GithubRepos() {
   const [repos, setRepos] = useState<Repo[] | null>(null);
@@ -24,21 +31,21 @@ export default function GithubRepos() {
 
   useEffect(() => {
     const controller = new AbortController();
-    fetch(`https://api.github.com/users/${p.github}/repos?per_page=100&sort=pushed`, {
+    fetch(`https://api.github.com/users/${p.github}/repos?per_page=100`, {
       signal: controller.signal,
     })
       .then((res) => {
         if (!res.ok) throw new Error(String(res.status));
         return res.json() as Promise<Repo[]>;
       })
-      .then((data) =>
+      .then((data) => {
+        const byName = new Map(data.map((r) => [r.name.toLowerCase(), r]));
         setRepos(
-          data
-            .filter((r) => !r.fork && !HIDDEN.includes(r.name.toLowerCase()))
-            .sort((a, b) => +new Date(b.pushed_at) - +new Date(a.pushed_at))
-            .slice(0, 9)
-        )
-      )
+          FEATURED.map((name) => byName.get(name.toLowerCase())).filter(
+            (r): r is Repo => r !== undefined
+          )
+        );
+      })
       .catch((err: Error) => {
         if (err.name !== "AbortError") setFailed(true);
       });
